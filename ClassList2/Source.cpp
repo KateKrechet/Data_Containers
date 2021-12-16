@@ -1,4 +1,4 @@
-#include<iostream>
+ï»¿#include<iostream>
 using namespace std;
 
 #define tab "\t"
@@ -21,13 +21,13 @@ class List
 			cout << "EDestructor:\t" << this << endl;
 		}
 		friend class List;
-	}*Head,*Tail;//Îáúÿâëÿåì 2 êàçàòåëÿ ñðàçó æå ïîñëå îïèñàíèÿ êëàññà
-	             //ýòè óêàçàòåëè áóäóò ïåðåìåííûìè ÷ëåíàìè êëàññà List
-	size_t size;//Ðàçìåð ñïèñêà
+	}*Head,*Tail;//ÐžÐ±ÑŠÑÐ²Ð»ÑÐµÐ¼ 2 ÐºÐ°Ð·Ð°Ñ‚ÐµÐ»Ñ ÑÑ€Ð°Ð·Ñƒ Ð¶Ðµ Ð¿Ð¾ÑÐ»Ðµ Ð¾Ð¿Ð¸ÑÐ°Ð½Ð¸Ñ ÐºÐ»Ð°ÑÑÐ°
+	             //ÑÑ‚Ð¸ ÑƒÐºÐ°Ð·Ð°Ñ‚ÐµÐ»Ð¸ Ð±ÑƒÐ´ÑƒÑ‚ Ð¿ÐµÑ€ÐµÐ¼ÐµÐ½Ð½Ñ‹Ð¼Ð¸ Ñ‡Ð»ÐµÐ½Ð°Ð¼Ð¸ ÐºÐ»Ð°ÑÑÐ° List
+	size_t size;//Ð Ð°Ð·Ð¼ÐµÑ€ ÑÐ¿Ð¸ÑÐºÐ°
 public:
 	List()
 	{
-		Head = Tail = nullptr;//åñëè ñïèñîê ïóñò, òî ãîëîâà è õâîñò óêàçûâàþò íà 0
+		Head = Tail = nullptr;//ÐµÑÐ»Ð¸ ÑÐ¿Ð¸ÑÐ¾Ðº Ð¿ÑƒÑÑ‚, Ñ‚Ð¾ Ð³Ð¾Ð»Ð¾Ð²Ð° Ð¸ Ñ…Ð²Ð¾ÑÑ‚ ÑƒÐºÐ°Ð·Ñ‹Ð²Ð°ÑŽÑ‚ Ð½Ð° 0
 		size = 0;
 		cout << "LConstructor:\t" << this << endl;
 	}
@@ -40,8 +40,8 @@ public:
 	{
 		if (Head == nullptr && Tail==nullptr)
 		{
-			//êîãäà â ñïèñêå ïîÿâëÿåòñÿ ïåðâûé ýëåìåíò, îí îäíîâðåìåííî ÿâÿëÿåòñÿ è ãîëîâîé, 
-			//è õâîñòîì
+			//ÐºÐ¾Ð³Ð´Ð° Ð² ÑÐ¿Ð¸ÑÐºÐµ Ð¿Ð¾ÑÐ²Ð»ÑÐµÑ‚ÑÑ Ð¿ÐµÑ€Ð²Ñ‹Ð¹ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚, Ð¾Ð½ Ð¾Ð´Ð½Ð¾Ð²Ñ€ÐµÐ¼ÐµÐ½Ð½Ð¾ ÑÐ²ÑÐ»ÑÐµÑ‚ÑÑ Ð¸ Ð³Ð¾Ð»Ð¾Ð²Ð¾Ð¹, 
+			//Ð¸ Ñ…Ð²Ð¾ÑÑ‚Ð¾Ð¼
 			Head = Tail = new Element(Data);
 			size++;
 			return;
@@ -59,7 +59,7 @@ public:
 	{
 		if (Index >=size)
 		{
-			cout << "Âûõîä çà ïðåäåëû ñïèñêà!" << endl;
+			cout << "Ð’Ñ‹Ñ…Ð¾Ð´ Ð·Ð° Ð¿Ñ€ÐµÐ´ÐµÐ»Ñ‹ ÑÐ¿Ð¸ÑÐºÐ°!" << endl;
 			return;
 		}
 		Element* Temp;
@@ -79,7 +79,7 @@ public:
 		Temp->pPrev->pNext = New;
 		Temp->pPrev = New;*/
 
-		Temp->pPrev=Temp->pPrev ->pNext= new Element(Data,Temp, Temp->pPrev);//ïðåäøåñòâóþùèé äëÿ Temp   è ñëåäóþùèé äëÿ ðàíåå ïðåäøåñòâóþùåãî=New,äëÿ êîòîðîãî Temp-ñëåä, à ïðåäøåñòâóþùèé - ðàíåå ïðåäøåñòâóþùèé äëÿ Temp
+		Temp->pPrev=Temp->pPrev ->pNext= new Element(Data,Temp, Temp->pPrev);//Ð¿Ñ€ÐµÐ´ÑˆÐµÑÑ‚Ð²ÑƒÑŽÑ‰Ð¸Ð¹ Ð´Ð»Ñ Temp   Ð¸ ÑÐ»ÐµÐ´ÑƒÑŽÑ‰Ð¸Ð¹ Ð´Ð»Ñ Ñ€Ð°Ð½ÐµÐµ Ð¿Ñ€ÐµÐ´ÑˆÐµÑÑ‚Ð²ÑƒÑŽÑ‰ÐµÐ³Ð¾=New,Ð´Ð»Ñ ÐºÐ¾Ñ‚Ð¾Ñ€Ð¾Ð³Ð¾ Temp-ÑÐ»ÐµÐ´, Ð° Ð¿Ñ€ÐµÐ´ÑˆÐµÑÑ‚Ð²ÑƒÑŽÑ‰Ð¸Ð¹ - Ñ€Ð°Ð½ÐµÐµ Ð¿Ñ€ÐµÐ´ÑˆÐµÑÑ‚Ð²ÑƒÑŽÑ‰Ð¸Ð¹ Ð´Ð»Ñ Temp
 		size++;
 	}
 	
@@ -110,10 +110,10 @@ public:
 	}
 	void erase(int Index)
 	{
-		//êîíòðîëüíûå òî÷êè
+		//ÐºÐ¾Ð½Ñ‚Ñ€Ð¾Ð»ÑŒÐ½Ñ‹Ðµ Ñ‚Ð¾Ñ‡ÐºÐ¸
 		if (Index >=size)
 		{
-			cout << "Âûõîä çà ïðåäåëû ñïèñêà" << endl;
+			cout << "Ð’Ñ‹Ñ…Ð¾Ð´ Ð·Ð° Ð¿Ñ€ÐµÐ´ÐµÐ»Ñ‹ ÑÐ¿Ð¸ÑÐºÐ°" << endl;
 			return;
 		}
 		if (Index == 0) return pop_front();
@@ -131,9 +131,9 @@ public:
 		}
 
 		Element* Erased = Temp;
-		Temp=Temp->pPrev;//ñòàíîâèòñÿ ïðåäøåñòâóþùèì
-		Temp->pNext = Temp->pNext->pNext;//ñëåäóþùèé áóäåò ýëåìåíò ÷åðåç 1
-		Temp->pNext->pPrev = Temp;//Temp ñòàíîâèòñÿ ïðåäøåñòâóþùèì äëÿ ðàíåå ñëåäóþùåãî
+		Temp=Temp->pPrev;//ÑÑ‚Ð°Ð½Ð¾Ð²Ð¸Ñ‚ÑÑ Ð¿Ñ€ÐµÐ´ÑˆÐµÑÑ‚Ð²ÑƒÑŽÑ‰Ð¸Ð¼
+		Temp->pNext = Temp->pNext->pNext;//ÑÐ»ÐµÐ´ÑƒÑŽÑ‰Ð¸Ð¹ Ð±ÑƒÐ´ÐµÑ‚ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚ Ñ‡ÐµÑ€ÐµÐ· 1
+		Temp->pNext->pPrev = Temp;//Temp ÑÑ‚Ð°Ð½Ð¾Ð²Ð¸Ñ‚ÑÑ Ð¿Ñ€ÐµÐ´ÑˆÐµÑÑ‚Ð²ÑƒÑŽÑ‰Ð¸Ð¼ Ð´Ð»Ñ Ñ€Ð°Ð½ÐµÐµ ÑÐ»ÐµÐ´ÑƒÑŽÑ‰ÐµÐ³Ð¾
 		delete Erased;
 		size--;
 
@@ -145,7 +145,7 @@ public:
 		for (Element* Temp = Head; Temp; Temp = Temp->pNext)
 			cout << Temp->pPrev << tab << Temp << tab << Temp->Data << tab << Temp->pNext << endl;
 		cout << "Tail:\t" << Tail << endl;
-		cout << "Êîëè÷åñòâî ýëåìåíòîâ ñïèñêà: " << size << endl;
+		cout << "ÐšÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð¾Ð² ÑÐ¿Ð¸ÑÐºÐ°: " << size << endl;
 	}
 	void reverse_print()const
 	{
@@ -153,7 +153,7 @@ public:
 		for(Element*Temp=Tail;Temp;Temp=Temp->pPrev)
 			cout << Temp->pPrev << tab << Temp << tab << Temp->Data << tab << Temp->pNext << endl;
 		cout << "Head:\t" << Head << endl;
-		cout << "Êîëè÷åñòâî ýëåìåíòîâ ñïèñêà: " << size << endl;
+		cout << "ÐšÐ¾Ð»Ð¸Ñ‡ÐµÑÑ‚Ð²Ð¾ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð¾Ð² ÑÐ¿Ð¸ÑÐºÐ°: " << size << endl;
 	}
 };
 
@@ -161,7 +161,7 @@ void main()
 {
 	setlocale(LC_ALL, "");
 	int n;
-	cout << "Ââåäèòå ðàçìåð ñïèñêà: "; cin >> n;
+	cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ñ€Ð°Ð·Ð¼ÐµÑ€ ÑÐ¿Ð¸ÑÐºÐ°: "; cin >> n;
 	List list;
 	for (int i = 0; i < n; i++)
 	{
@@ -174,8 +174,8 @@ void main()
 	list.pop_back();*/
 	int index;
 	int value;
-	cout << "Ââåäèòå èíäåêñ äîáàâëÿåìîãî ýëåìåíòà: "; cin >> index;
-	cout << "Ââåäèòå çíà÷åíèå äîáàâëÿåìîãî ýëåìåíòà: "; cin >> value;
+	cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¸Ð½Ð´ÐµÐºÑ Ð´Ð¾Ð±Ð°Ð²Ð»ÑÐµÐ¼Ð¾Ð³Ð¾ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð°: "; cin >> index;
+	cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ðµ Ð´Ð¾Ð±Ð°Ð²Ð»ÑÐµÐ¼Ð¾Ð³Ð¾ ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚Ð°: "; cin >> value;
 	list.erase(index);
 	list.print();
 	list.reverse_print();
