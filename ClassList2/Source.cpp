@@ -73,13 +73,16 @@ public:
 			Temp = Tail;
 			for (int i = 0; i < size - Index - 1; i++)Temp = Temp->pPrev;
 		}
-		Element* New = new Element(Data);
+		/*Element* New = new Element(Data);
 		New->pNext = Temp;
 		New->pPrev = Temp->pPrev;
 		Temp->pPrev->pNext = New;
-		Temp->pPrev = New;
+		Temp->pPrev = New;*/
+
+		Temp->pPrev=Temp->pPrev ->pNext= new Element(Data,Temp, Temp->pPrev);//предшествующий для Temp   и следующий для ранее предшествующего=New,для которого Temp-след, а предшествующий - ранее предшествующий для Temp
 		size++;
 	}
+	
 	//Removing elements
 	void pop_front()
 	{
@@ -104,6 +107,36 @@ public:
 		delete Tail->pNext;
 		Tail->pNext = nullptr;
 		size--;
+	}
+	void erase(int Index)
+	{
+		//контрольные точки
+		if (Index >=size)
+		{
+			cout << "Выход за пределы списка" << endl;
+			return;
+		}
+		if (Index == 0) return pop_front();
+		if (Index == size-1) return pop_back();
+		Element* Temp;
+		if (Index < size / 2)
+		{
+			Temp = Head;
+			for (int i = 0; i < Index; i++) Temp = Temp->pNext;
+		}
+		else
+		{
+			Temp = Tail;
+			for (int i = 0; i < size - Index - 1; i++)Temp = Temp->pPrev;
+		}
+
+		Element* Erased = Temp;
+		Temp=Temp->pPrev;//становится предшествующим
+		Temp->pNext = Temp->pNext->pNext;//следующий будет элемент через 1
+		Temp->pNext->pPrev = Temp;//Temp становится предшествующим для ранее следующего
+		delete Erased;
+		size--;
+
 	}
 	//Methods
 	void print()const
@@ -143,7 +176,7 @@ void main()
 	int value;
 	cout << "Введите индекс добавляемого элемента: "; cin >> index;
 	cout << "Введите значение добавляемого элемента: "; cin >> value;
-	list.insert(value, index);
+	list.erase(index);
 	list.print();
 	list.reverse_print();
 
