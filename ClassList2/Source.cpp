@@ -25,15 +25,164 @@ class List
 	             //эти указатели будут переменными членами класса List
 	size_t size;//Размер списка
 public:
+	class Iterator
+	{
+		Element* Temp;
+	public:
+		Iterator(Element* Temp) :Temp(Temp)
+		{
+			cout << "IConstructor:\t" << this << endl;
+		}
+		~Iterator()
+		{
+			cout << "IDestructor:\t" << this << endl;
+		}
+		Iterator& operator++()
+		{
+			Temp = Temp->pNext;
+			return *this;
+		}
+		Iterator operator++(int)
+		{
+			Iterator old = *this;
+			Temp = Temp->pNext;
+			return old;
+		}
+		Iterator& operator--()
+		{
+			Temp = Temp->pPrev;
+			return *this;
+		}
+		Iterator& operator--(int)
+		{
+			Iterator old = *this;
+			Temp = Temp->pPrev;
+			return old;;
+		}
+		bool operator==(const Iterator& other)const
+		{
+			return this->Temp == other.Temp;
+		}
+		bool operator!=(const Iterator& other)const
+		{
+			return this->Temp != other.Temp;
+		}
+		const int& operator*()const
+		{
+			return Temp->Data;
+		}
+		int& operator*()
+		{
+			return Temp->Data;
+		}
+
+	};
+	class ReverseIterator
+	{
+		Element* Temp;
+	public:
+		ReverseIterator(Element* Temp) :Temp(Temp)
+		{
+			cout << "RIConstructor:\t" << this << endl;
+		}
+		~ReverseIterator()
+		{
+			cout << "RIDestructor:\t" << this << endl;
+		}
+		ReverseIterator& operator++()
+		{
+			Temp = Temp->pPrev;
+			return *this;
+		}
+		ReverseIterator operator++(int)
+		{
+			ReverseIterator old = *this;
+			Temp = Temp->pPrev;
+			return old;//возвращает старое значение
+		}
+		ReverseIterator& operator--()
+		{
+			Temp = Temp->pNext;
+			return *this;
+		}
+		ReverseIterator operator--(int)
+		{
+			ReverseIterator old = *this;
+			Temp = Temp->pNext;
+			return old;
+		}
+		bool operator==(const ReverseIterator& other)
+		{
+			return this->Temp == other.Temp;
+		}
+		bool operator!=(const ReverseIterator& other)
+		{
+			return this->Temp != other.Temp;
+		}
+		const int& operator*()const
+		{
+			return Temp->Data;
+		}
+		int& operator*()
+		{
+			return Temp->Data;
+		}
+
+	};
+	Iterator begin()
+	{
+		return Head;
+	}
+	Iterator end()
+	{
+		return nullptr;
+	}
+	ReverseIterator rbegin()
+	{
+		return Tail;
+	}
+	ReverseIterator rend()
+	{
+		return nullptr;
+	}
+	
+
 	List()
 	{
 		Head = Tail = nullptr;//если список пуст, то голова и хвост указывают на 0
 		size = 0;
 		cout << "LConstructor:\t" << this << endl;
 	}
+	List(const std::initializer_list<int>& il) :List()
+	{
+		cout << typeid(il.begin()).name() << endl;
+		for (int const* it = il.begin(); it != il.end(); it++)
+		{
+			push_back(*it);
+		}
+
+	}
+	List(const List& other)
+	{
+		/*for (Element* Temp = other.Head; Temp; Temp = Temp->pNext) this->push_back(Temp->Data);*/
+		*this = other;//из КК вызываем оператор присваивания
+		cout << "LCopyConstructor: " << this << endl;
+		
+	}
 	~List()
 	{
+		while (Head) pop_front();
 		cout << "LDestructor:\t" << this << endl;
+		cout << "\n--------------------------------------------------------------\n";
+	}
+	//Operators
+	List& operator=(const List& other)
+	{
+		if (this == &other) return *this;
+		while (Head) pop_front();//затираем старые значения
+		for (Element* Temp = other.Head; Temp; Temp = Temp->pNext) this->push_back(Temp->Data);
+		cout << "LCopyAssignment: " << this << endl;
+		return *this;
 	}
 	//Adding elements
 	void push_front(int Data)
@@ -156,10 +305,12 @@ public:
 		cout << "Количество элементов списка: " << size << endl;
 	}
 };
+//#define BASE_CHECK
 
 void main()
 {
 	setlocale(LC_ALL, "");
+#ifdef BASE_CHECK
 	int n;
 	cout << "Введите размер списка: "; cin >> n;
 	List list;
@@ -179,5 +330,34 @@ void main()
 	list.erase(index);
 	list.print();
 	list.reverse_print();
+#endif // BASE_CHECK
+
+	List list= { 3,5,8,13,21 };
+	/*list.print();
+
+	List list1 = list;//CopyConstructor
+	list1.print();
+
+	List list2;
+	list2 = list;
+	list2.print();//CopyAssignment
+	list2.print();*/
+
+	for (int i : list)
+	{
+		cout << i << tab;
+	}
+	cout << endl;
+	
+	for (List::ReverseIterator rit = list.rbegin(); rit != list.rend(); rit++)
+	{
+		cout << *rit << tab;
+	}
+	cout << endl;
+	for (List::ReverseIterator rit = list.rbegin(); rit != list.rend(); ++rit)
+	{
+		cout << *rit << tab;
+	}
+	cout << endl;
 
 }
