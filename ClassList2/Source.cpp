@@ -21,7 +21,7 @@ class List
 			cout << "EDestructor:\t" << this << endl;
 		}
 		friend class List;
-	}*Head,*Tail;//Объявляем 2 казателя сразу же после описания класса
+	}*Head,*Tail;//Объявляем 2 указателя сразу же после описания класса
 	             //эти указатели будут переменными членами класса List
 	size_t size;//Размер списка
 public:
