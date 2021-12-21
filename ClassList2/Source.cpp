@@ -191,11 +191,11 @@ public:
 	{
 		return nullptr;
 	}
-	ConstReverseIterator crbegin()
+	ConstReverseIterator crbegin()const
 	{
 		return Tail;
 	}
-	ConstReverseIterator crend()//c-потому что const
+	ConstReverseIterator crend()const//c-потому что const
 	{
 		return nullptr;
 	}
@@ -335,6 +335,14 @@ void print_list(const List& list)
 	}
 	cout << endl;
 }
+void reverse_print_list(const List& list)
+{
+	for (List::ConstReverseIterator rit = list.crbegin(); rit != list.crend(); ++rit)
+	{
+		cout << *rit << tab;
+	}
+	cout << endl;
+}
 
 //#define BASE_CHECK
 
@@ -376,5 +384,6 @@ void main()
 		cout << *rit << tab;
 	}
 	cout << endl;
+	reverse_print_list(list1);
 	print_list(list1);
 }
