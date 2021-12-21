@@ -4,16 +4,16 @@ using std::cout;
 using std::endl;
 
 #define tab "\t"
-
+template<typename T>
 class List
 {
 	class Element
 	{
-		int Data;
+		T Data;
 		Element* pNext;
 		Element* pPrev;
 	public:
-		Element(int Data, Element* pNext = nullptr, Element* pPrev = nullptr) :
+		Element(T Data, Element* pNext = nullptr, Element* pPrev = nullptr) :
 			Data(Data), pNext(pNext), pPrev(pPrev)
 		{
 			cout << "EConstructor:\t" << this << endl;
@@ -80,24 +80,24 @@ public:
 
 		ConstIterator& operator++()
 		{
-			Temp = Temp->pNext;
+			BaseIterator::Temp = BaseIterator::Temp->pNext;
 			return *this;
 		}
 		ConstIterator operator++(int)
 		{
 			ConstIterator old = *this;
-			Temp = Temp->pNext;
+			BaseIterator::Temp = BaseIterator::Temp->pNext;
 			return old;
 		}
 		ConstIterator& operator--()
 		{
-			Temp = Temp->pPrev;
+			BaseIterator::Temp = BaseIterator::Temp->pPrev;
 			return *this;
 		}
 		ConstIterator operator--(int)
 		{
 			ConstIterator old = *this;
-			Temp = Temp->pPrev;
+			BaseIterator::Temp = BaseIterator::Temp->pPrev;
 			return old;
 		}
 	};
@@ -115,7 +115,7 @@ public:
 
 		int& operator*()
 		{
-			return Temp->Data;
+			return BaseIterator::Temp->Data;
 		}
 	};
 	class ConstReverseIterator :public BaseIterator
@@ -136,24 +136,24 @@ public:
 
 		ConstReverseIterator& operator++()
 		{
-			Temp = Temp->pPrev;
+			BaseIterator::Temp = BaseIterator::Temp->pPrev;
 			return *this;
 		}
 		ConstReverseIterator operator++(int)
 		{
 			ConstReverseIterator old = *this;
-			Temp = Temp->pPrev;
+			BaseIterator::Temp = BaseIterator::Temp->pPrev;
 			return old;
 		}
 		ConstReverseIterator& operator--()
 		{
-			Temp = Temp->pNext;
+			BaseIterator::Temp = BaseIterator::Temp->pNext;
 			return *this;
 		}
 		ConstReverseIterator operator--(int)
 		{
 			ConstReverseIterator old = *this;
-			Temp = Temp->pNext;
+			BaseIterator::Temp = BaseIterator::Temp->pNext;
 			return old;
 		}
 	};
@@ -164,7 +164,7 @@ public:
 		~ReverseIterator() {}
 		int& operator*()
 		{
-			return Temp->Data;
+			return BaseIterator::Temp->Data;
 		}
 	};
 	Iterator begin()
@@ -206,7 +206,7 @@ public:
 		size = 0;
 		cout << "LConstructor:\t" << this << endl;
 	}
-	List(const std::initializer_list<int>& il) :List()
+	List(const std::initializer_list<T>& il) :List()
 	{
 		cout << typeid(il.begin()).name() << endl;;
 		for (int const* it = il.begin(); it != il.end(); it++)
@@ -214,7 +214,7 @@ public:
 			push_back(*it);
 		}
 	}
-	List(const List& other) :List()
+	List(const List<T>& other) :List()
 	{
 		//for (Element* Temp = other.Head; Temp; Temp = Temp->pNext)this->push_back(Temp->Data);
 		*this = other;	//Из конструктора копирования вызываем оператор присваивания
@@ -228,7 +228,7 @@ public:
 	}
 
 	//				Operators:
-	List& operator=(const List& other)
+	List<T>& operator=(const List<T>& other)
 	{
 		if (this == &other)return *this;
 		while (Head)pop_front();
@@ -238,7 +238,7 @@ public:
 	}
 
 	//				Adding elements:
-	void push_front(int Data)
+	void push_front(T Data)
 	{
 		if (Head == nullptr && Tail == nullptr)
 		{
@@ -251,13 +251,13 @@ public:
 		Head = Head->pPrev = new Element(Data, Head);
 		size++;
 	}
-	void push_back(int Data)
+	void push_back(T Data)
 	{
 		if (Head == nullptr && Tail == nullptr)return push_front(Data);
 		Tail = Tail->pNext = new Element(Data, nullptr, Tail);
 		size++;
 	}
-	void insert(int Data, int Index)
+	void insert(T Data, int Index)
 	{
 		if (Index >= size)
 		{
@@ -326,64 +326,66 @@ public:
 		cout << "Head:\t" << Head << endl;
 	}
 };
-void print_list(const List& list)
+template<typename T>
+void print_list(const List<T>& list)
 {
-	for (List::ConstIterator it = list.cbegin(); it != list.cend(); it++)
+	for (typename List<T>::ConstIterator it = list.cbegin(); it != list.cend(); it++)
 	{
 		//*it*=123;//it works
 		cout << *it << tab;
 	}
 	cout << endl;
 }
-void reverse_print_list(const List& list)
-{
-	for (List::ConstReverseIterator rit = list.crbegin(); rit != list.crend(); ++rit)
+	template<typename T>
+	void reverse_print_list(const List<T>&list)
 	{
-		cout << *rit << tab;
+		for (typename List<T>::ConstReverseIterator rit = list.crbegin(); rit != list.crend(); ++rit)
+		{
+			cout << *rit << tab;
+		}
+		cout << endl;
 	}
-	cout << endl;
-}
 
-//#define BASE_CHECK
+	//#define BASE_CHECK
 
-void main()
-{
-	setlocale(LC_ALL, "");
+	void main()
+	{
+		setlocale(LC_ALL, "");
 #ifdef BASE_CHECK
-	int n;
-	cout << "Введите размер списка: "; cin >> n;
-	List list;
-	for (int i = 0; i < n; i++)
-	{
-		list.push_back(rand() % 100);
-	}
-	list.print();
-	list.reverse_print();
-	cout << "\n------------------------------------------------\n";
-	/*list.pop_front();
-	list.pop_back();*/
-	int index;
-	int value;
-	cout << "Введите индекс добавляемого элемента: "; cin >> index;
-	cout << "Введите значение добавляемого элемента: "; cin >> value;
-	list.insert(value, index);
-	list.print();
-	list.reverse_print();
+		int n;
+		cout << "Введите размер списка: "; cin >> n;
+		List list;
+		for (int i = 0; i < n; i++)
+		{
+			list.push_back(rand() % 100);
+		}
+		list.print();
+		list.reverse_print();
+		cout << "\n------------------------------------------------\n";
+		/*list.pop_front();
+		list.pop_back();*/
+		int index;
+		int value;
+		cout << "Введите индекс добавляемого элемента: "; cin >> index;
+		cout << "Введите значение добавляемого элемента: "; cin >> value;
+		list.insert(value, index);
+		list.print();
+		list.reverse_print();
 #endif // BASE_CHECK
 
-	List list = { 3,5,8,13,21 };
-	list.print();
+		List<int> list = { 3,5,8,13,21 };
+		list.print();
 
-	List list1;
-	list1 = list;
-	//list1.print();
-	for (int i : list1)cout << i << tab; cout << endl;
+		List<int> list1;
+		list1 = list;
+		//list1.print();
+		for (int i : list1)cout << i << tab; cout << endl;
 
-	for (List::ConstReverseIterator rit = list.rbegin(); rit != list.rend(); ++rit)
-	{
-		cout << *rit << tab;
+		for (List<int>::ConstReverseIterator rit = list.rbegin(); rit != list.rend(); ++rit)
+		{
+			cout << *rit << tab;
+		}
+		cout << endl;
+		reverse_print_list(list1);
+		print_list(list1);
 	}
-	cout << endl;
-	reverse_print_list(list1);
-	print_list(list1);
-}
