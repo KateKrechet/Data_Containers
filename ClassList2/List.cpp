@@ -209,7 +209,7 @@ template <typename T>
 List<T>::List(const std::initializer_list<T>& il) :List()
 {
 	cout << typeid(il.begin()).name() << endl;;
-	for (int const* it = il.begin(); it != il.end(); it++)
+	for (T const* it = il.begin(); it != il.end(); it++)
 	{
 		push_back(*it);
 	}
