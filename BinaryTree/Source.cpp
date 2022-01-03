@@ -9,6 +9,7 @@ class Tree
 		int Data;
 		Element* pLeft;
 		Element* pRight;
+		static int count;//кол-во элементов
 	public:
 		Element(int Data, Element* pLeft = nullptr, Element* pRight = nullptr)
 			:Data(Data), pLeft(pLeft), pRight(pRight)
@@ -22,6 +23,8 @@ class Tree
 		friend class Tree;
 
 	}*Root;//корень дерева
+
+
 public:
 	Element* getRoot()const
 	{
@@ -53,6 +56,19 @@ public:
 		print(this->Root);
 		cout << endl;
 	}
+	int count()const
+	{
+		return count(this->Root);
+	}
+	int sum()const
+	{
+		return sum(this->Root);
+	}
+	double avg()const
+	{
+		return avg(this->Root);
+	}
+
 private:
 	void insert(int Data, Element* Root)
 	{    //Root - корень поддереважкаждый элемент является корнем своего поддерева
@@ -91,13 +107,35 @@ private:
 		//return Root->pRight == nullptr ? Root->Data : maxValue(Root->pRight);
 		return Root->pRight ? maxValue(Root->pRight) : Root->Data;
 	}
+	int count(Element* Root)const
+	{
+		if (Root == nullptr)return 0;
+		return count(Root->pLeft) + count(Root->pRight) + 1;
+	}
+	int sum(Element* Root)const
+	{
+		int l, r;
+		if (Root != nullptr)
+		{
+			l = (Root->pLeft != nullptr) ? sum(Root->pLeft) : 0;
+			r = (Root->pRight != nullptr) ? sum(Root->pRight) : 0;
+			return l + r + Root->Data;
+		}
+		else return 0;
+	}
+	double avg(Element* Root)const
+	{
+		return double(sum()) / count();
+	}
+
 };
+
 
 void main()
 {
 	setlocale(LC_ALL, "");
 	int n;
-	cout << "Вdедите количество элементов: "; cin >> n;
+	cout << "Введите количество элементов: "; cin >> n;
 	Tree tree;
 	for (int i = 0; i < n; i++)
 	{
@@ -107,4 +145,7 @@ void main()
 	cout << endl;
 	cout << "Минимальное значение в дереве: " << tree.minValue() << endl;
 	cout << "Максимальное значение в дереве: " << tree.maxValue() << endl;
+	cout << "Количество элементов в дереве: " << tree.count() << endl;
+	cout << "Сумма элементов дерева: " << tree.sum() << endl;
+	cout << "Среднее арифметическое элементов дерева: " << tree.avg() << endl;
 }
