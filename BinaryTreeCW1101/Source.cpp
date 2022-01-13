@@ -45,12 +45,36 @@ public:
 	{
 		for (int i : il)insert(i, Root);
 	}
+	Tree(const Tree& other)
+	{
+		*this = other;
+		cout << "TCopyConstructor: " << this << endl;
+	}
+
 	~Tree()
 	{
 		Clear(Root);
 		Root = nullptr;
 		cout << "TDestructor:\t" << this << endl;
 		cout << "\n---------------------------------\n";
+	}
+
+	Tree& operator=(const Tree& other)
+	{
+		if (this == &other) return *this;
+		this->Clear();
+		Element* Root = other.Root;
+		CopyFunction(Root);
+		cout << "TCopyAssignment:\t" << this << endl;
+
+	}
+
+	void CopyFunction(Element* Root)
+	{
+		if (Root == nullptr) return;
+		this->insert(Root->Data);
+		CopyFunction(Root->pLeft);
+		CopyFunction(Root->pRight);
 	}
 
 	void insert(int Data)
@@ -266,7 +290,7 @@ public:
 };
 //#define BASE_CHECK
 //#define ERASE_METHODS
-//#define COPY_METHODS
+#define COPY_METHODS
 void main()
 {
 	setlocale(LC_ALL, "");
@@ -323,9 +347,9 @@ void main()
 	tree3.print();//CopyConstructor
 
 #endif // COPY_METHODS
-	Tree tree = { 50, 25, 75, 16, 32, 64, 80, 8, 18, 48, 77, 85 };
+	/*Tree tree = { 50, 25, 75, 16, 32, 64, 80, 8, 18, 48, 77, 85 };
 	tree.print();
 	cout << "Глубина дерева: " << tree.depth()<<endl;
 	//tree.print(3);
-	tree.tree_print();
+	tree.tree_print();*/
 }
