@@ -57,6 +57,7 @@ public:
 	{
 		insert(Data, this->Root);
 	}
+	
 	void erase(int Data)
 	{
 		erase(Data, Root);
@@ -86,12 +87,29 @@ public:
 		Clear(Root);
 		Root = nullptr;
 	}
+	int depth()const
+	{
+		return depth(this->Root);
+	}
 	void print()const
 	{
 		print(this->Root);
 		cout << endl;
 	}
+	void print(int depth)const
+	{
+
+		print(this->Root,depth);
+		cout << endl;
+	}
+	void tree_print()
+	{
+
+		tree_print(0);
+		cout << endl;
+	}
 private:
+
 	void insert(int Data, Element* Root)
 	{
 		//Root - корень поддерева
@@ -176,12 +194,47 @@ private:
 		delete Root;
 	}
 
+
+	int depth(Element* Root)const
+	{
+		if (Root == nullptr)return 0;
+		else return
+			depth(Root->pLeft) + 1 > depth(Root->pRight) + 1 ?
+			depth(Root->pLeft) + 1 : depth(Root->pRight) + 1;
+	}
+
 	void print(Element* Root)const
 	{
 		if (Root == nullptr)return;
 		print(Root->pLeft);
 		cout << Root->Data << tab;
 		print(Root->pRight);
+	}
+
+	void print(Element* Root, int depth)const
+	{
+		if (Root == nullptr || depth == -1)return;
+		
+		if (depth == 1 && Root->pLeft == nullptr)cout << " " << tab;
+		print(Root->pLeft, depth - 1);
+		
+		if (depth == 0) cout << Root->Data /*<< tab*/;
+		int min_distance = 4;
+		cout.width(min_distance * (this->depth() - depth));
+		if (depth == 1 && Root->pRight == nullptr)cout << " " << tab;
+		print(Root->pRight, depth - 1);
+		//cout << tab;
+	}
+	void tree_print(int depth)
+	{
+		if (depth==this->depth())return;
+		int min_distance =4;
+		cout.width(min_distance * (this->depth() - depth));
+		//for (int i = 0; i < (this->depth() - depth)*2; i++)	cout << tab;//вывод максимума табул€ций дл€ 0 глубины
+		print(depth);
+		//for (int i = 0; i < (this->depth() - depth)*4; i++)	cout << tab;
+		cout << endl;
+		tree_print(depth + 1);
 	}
 };
 
@@ -212,6 +265,8 @@ public:
 	}
 };
 //#define BASE_CHECK
+//#define ERASE_METHODS
+//#define COPY_METHODS
 void main()
 {
 	setlocale(LC_ALL, "");
@@ -247,10 +302,30 @@ void main()
 	u_tree.Clear();
 	u_tree.print();
 #endif // BASE_CHECK
+#ifdef ERASE_METHODS
 	Tree tree = { 50, 25, 75, 16, 32, 64, 80, 8, 11, 48, 77, 85 };
 	tree.print();
 	int value;
 	cout << "¬ведите удал€емое значение "; cin >> value;
 	tree.erase(value);
 	tree.print();
+#endif // ERASE_METHODS
+
+#ifdef COPY_METHODS
+	Tree tree = { 50, 25, 75, 16, 32, 64, 80, 8, 18, 48, 77, 85 };
+	tree.print();
+
+	Tree tree2;
+	tree2 = tree;
+	tree2.print();//CopyAssignment
+
+	Tree tree3 = tree;
+	tree3.print();//CopyConstructor
+
+#endif // COPY_METHODS
+	Tree tree = { 50, 25, 75, 16, 32, 64, 80, 8, 18, 48, 77, 85 };
+	tree.print();
+	cout << "√лубина дерева: " << tree.depth()<<endl;
+	//tree.print(3);
+	tree.tree_print();
 }
