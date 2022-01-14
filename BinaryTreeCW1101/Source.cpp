@@ -45,10 +45,23 @@ public:
 	{
 		for (int i : il)insert(i, Root);
 	}
-	Tree(const Tree& other)
+	/*Tree(const Tree& other)
 	{
 		*this = other;
 		cout << "TCopyConstructor: " << this << endl;
+	}*/
+
+	Tree(const Tree& other) :Tree()
+	{
+		copy(other.Root);
+		cout << "TCopyConstructor: " << this << endl;
+	}
+	Tree(Tree&& other)
+	{
+		this->Root = other.Root;
+		other.Root = nullptr;
+		cout << "TMoveConstructor: " << this << endl;//позволяет создавать меньше объектов при слиянии 2 деревьев
+		//res не копируется, а перемещается на место вызова функции
 	}
 
 	~Tree()
@@ -120,6 +133,15 @@ public:
 		print(this->Root);
 		cout << endl;
 	}
+
+	void copy(Element* Root)
+	{
+		if (Root == nullptr) return;
+		insert(Root->Data, this->Root);
+		copy(Root->pLeft);
+		copy(Root->pRight);
+	}
+
 	void print(int depth)const
 	{
 
@@ -227,6 +249,7 @@ private:
 			depth(Root->pLeft) + 1 : depth(Root->pRight) + 1;
 	}
 
+	
 	void print(Element* Root)const
 	{
 		if (Root == nullptr)return;
@@ -262,6 +285,12 @@ private:
 	}
 };
 
+Tree operator+(const Tree& left, const Tree& right)
+{
+	Tree res = left;
+	res.copy(right.getRoot());
+	return res;
+}
 class UniqueTree : public Tree
 {
 	void insert(int Data, Element* Root)
@@ -290,7 +319,7 @@ public:
 };
 //#define BASE_CHECK
 //#define ERASE_METHODS
-#define COPY_METHODS
+//#define COPY_METHODS
 void main()
 {
 	setlocale(LC_ALL, "");
@@ -347,9 +376,15 @@ void main()
 	tree3.print();//CopyConstructor
 
 #endif // COPY_METHODS
-	/*Tree tree = { 50, 25, 75, 16, 32, 64, 80, 8, 18, 48, 77, 85 };
+	Tree tree = { 50, 25, 75, 16, 32, 64, 80, 8, 18, 48, 77, 85 };
 	tree.print();
 	cout << "Глубина дерева: " << tree.depth()<<endl;
 	//tree.print(3);
-	tree.tree_print();*/
+	tree.tree_print();
+	Tree oak = { 67,34,88,22,53 };
+	oak.print();
+	cout << "\n==================================================\n";
+	Tree res = tree + oak;
+	cout << "\n==================================================\n";
+	res.print();
 }
