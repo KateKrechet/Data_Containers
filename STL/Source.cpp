@@ -1,4 +1,4 @@
-#include<iostream>
+ï»¿#include<iostream>
 using namespace std;
 #include<array>
 #include<vector>
@@ -22,7 +22,7 @@ void main()
 #ifdef VECTOR
 	vector<int> vec = { 0,1,1,2,3,5,8,13,21,34,55,89,144,232 };
 	cout << "Size:  " << vec.size() << endl;
-	cout << "Capacity:  " << vec.capacity() << endl;//åñòü òîëüêî ó âåêòîðà
+	cout << "Capacity:  " << vec.capacity() << endl;//ÐµÑÑ‚ÑŒ Ñ‚Ð¾Ð»ÑŒÐºÐ¾ Ñƒ Ð²ÐµÐºÑ‚Ð¾Ñ€Ð°
 	cout << "MaxSize:  " << vec.max_size() << endl;
 	cout << sizeof(vec) << endl;
 	int* data = vec.data();
@@ -35,21 +35,21 @@ void main()
 			cout << vec.at(i) << tab;
 		}
 		cout << endl;
-		//subscript - èíäåêñèðîâàíèå
+		//subscript - Ð¸Ð½Ð´ÐµÐºÑÐ¸Ñ€Ð¾Ð²Ð°Ð½Ð¸Ðµ
 	}
 	catch (const std::exception& e)
 	{
 		cerr << e.what() << endl;
 	}
 	cout << "Size:  " << vec.size() << endl;
-	cout << "Capacity:  " << vec.capacity() << endl;//åñòü òîëüêî ó âåêòîðà
+	cout << "Capacity:  " << vec.capacity() << endl;//ÐµÑÑ‚ÑŒ Ñ‚Ð¾Ð»ÑŒÐºÐ¾ Ñƒ Ð²ÐµÐºÑ‚Ð¾Ñ€Ð°
 	cout << "MaxSize:  " << vec.max_size() << endl;
 	cout << sizeof(vec) << endl;
 
 
 	vector<vector<int> >vec2;
 	cout << "Size:  " << vec2.size() << endl;
-	cout << "Capacity:  " << vec2.capacity() << endl;//åñòü òîëüêî ó âåêòîðà
+	cout << "Capacity:  " << vec2.capacity() << endl;//ÐµÑÑ‚ÑŒ Ñ‚Ð¾Ð»ÑŒÐºÐ¾ Ñƒ Ð²ÐµÐºÑ‚Ð¾Ñ€Ð°
 	cout << "MaxSize:  " << vec2.max_size() << endl;
 	cout << sizeof(vec2) << endl;
 #endif // VECTOR
