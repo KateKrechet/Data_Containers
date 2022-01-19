@@ -3,12 +3,14 @@ using namespace std;
 #include<array>
 #include<vector>
 #include<deque>
+#include<list>
 
 #define tab "\t"
 //#define STL_ARRAY
 //#define VECTOR
 //#define VECTOR_HW
-#define STL_DEQUE
+//#define STL_DEQUE
+#define STL_LIST
 
 void PrintVector(vector<int> vec);
 template<typename T> void print(const vector<T>& vec)
@@ -58,7 +60,7 @@ void main()
 	cout << "Capacity:  " << vec.capacity() << endl;//есть только у вектора
 	cout << "MaxSize:  " << vec.max_size() << endl;
 	cout << sizeof(vec) << endl;
-	
+
 	//vector<vector<int> >vec2;
 	//cout << "Size:  " << vec2.size() << endl;
 	//cout << "Capacity:  " << vec2.capacity() << endl;//есть только у вектора
@@ -71,14 +73,14 @@ void main()
 	cout << "Введите индекс добавляемого элемента: "; cin >> index;
 	cout << "Введите количество добавлений: "; cin >> count;
 	cout << "Введите значение добавляемого элемента: "; cin >> value;
-	
-	if (index < vec.size())vec.insert(vec.begin() + index,count, value);
+
+	if (index < vec.size())vec.insert(vec.begin() + index, count, value);
 	else cout << "Error: out of range " << endl;
 	print(vec);
 
 	std::vector<int>powers = { 1024,2048,4096,8192,16384 };
 
-	vec.insert(vec.begin() +4 , powers.begin(), powers.end());
+	vec.insert(vec.begin() + 4, powers.begin(), powers.end());
 	for (int i : vec) cout << i << tab; cout << endl;
 
 	vec.insert(vec.begin() + 8, { 256,384,512,768 });
@@ -86,7 +88,7 @@ void main()
 
 	cout << "Введите индекс удаляемого элемента: "; cin >> index;
 	cout << "Введите количество удалений: "; cin >> count;
-	vec.erase(vec.begin() + index, vec.begin() + index+count);
+	vec.erase(vec.begin() + index, vec.begin() + index + count);
 	print(vec);
 	cout << "\n----------------------------------------------------------\n";
 	vec.swap(powers);
@@ -148,6 +150,48 @@ void main()
 	for (int i : d_powers) cout << i << tab; cout << endl;
 
 #endif // !STL_DEQUE
+
+#ifdef STL_LIST
+
+	std::list<int> cont_list = { 3,5,8,13,21,34,55,89,144,233 };
+	for (int i : cont_list) cout << i << tab; cout << endl;
+
+	int index;
+	int value;
+	int count;
+	cout << "Введите индекс добавляемого элемента: "; cin >> index;
+	cout << "Введите количество добавлений: "; cin >> count;
+	cout << "Введите значение добавляемого элемента: "; cin >> value;
+
+	list<int>::iterator it = cont_list.begin();
+	advance(it, index);
+	if (index < int(cont_list.size()))cont_list.insert(it,count, value);
+	else cout << "Error: out of range " << endl;
+	for (int i : cont_list) cout << i << tab; cout << endl;
+
+	cout << "Введите индекс удаляемого элемента: "; cin >> index;
+
+	list<int>::iterator it1 = cont_list.begin();
+	advance(it1, index);
+	if (index < int(cont_list.size()))cont_list.erase(it1);
+	else cout << "Error: out of range " << endl;
+	for (int i : cont_list) cout << i << tab; cout << endl;
+
+	int first_index;
+	int last_index;
+	cout << "Введите индекс начала удаления: "; cin >> first_index;
+	cout << "Введите индекс конца удаления: "; cin >> last_index;
+	list<int>::iterator it2 = cont_list.begin();
+	list<int>::iterator it3 = cont_list.begin();
+	advance(it2, first_index);
+	advance(it3, last_index+1);
+
+	if (first_index < cont_list.size()&& last_index < cont_list.size())cont_list.erase(it2,it3);
+	else cout << "Error: out of range " << endl;
+	for (int i : cont_list) cout << i << tab; cout << endl;
+
+#endif // STL_LIST
+
 
 }
 
