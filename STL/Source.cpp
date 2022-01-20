@@ -164,17 +164,22 @@ void main()
 	cout << "Введите значение добавляемого элемента: "; cin >> value;
 
 	list<int>::iterator it = cont_list.begin();
-	advance(it, index);
-	if (index < int(cont_list.size()))cont_list.insert(it,count, value);
+	if (index < int(cont_list.size()))
+	{
+		advance(it, index);
+		cont_list.insert(it, count, value);
+	}
 	else cout << "Error: out of range " << endl;
 	for (int i : cont_list) cout << i << tab; cout << endl;
 
-	cout << "Введите индекс удаляемого элемента: "; cin >> index;
+	do
+	{
+		cout << "Введите индекс удаляемого элемента: "; cin >> index;
+	} while (index >= cont_list.size());
 
 	list<int>::iterator it1 = cont_list.begin();
 	advance(it1, index);
-	if (index < int(cont_list.size()))cont_list.erase(it1);
-	else cout << "Error: out of range " << endl;
+	cont_list.erase(it1);
 	for (int i : cont_list) cout << i << tab; cout << endl;
 
 	int first_index;
@@ -184,9 +189,9 @@ void main()
 	list<int>::iterator it2 = cont_list.begin();
 	list<int>::iterator it3 = cont_list.begin();
 	advance(it2, first_index);
-	advance(it3, last_index+1);
+	advance(it3, last_index + 1);
 
-	if (first_index < cont_list.size()&& last_index < cont_list.size())cont_list.erase(it2,it3);
+	if (first_index < cont_list.size() && last_index < cont_list.size())cont_list.erase(it2, it3);
 	else cout << "Error: out of range " << endl;
 	for (int i : cont_list) cout << i << tab; cout << endl;
 
