@@ -4,13 +4,15 @@ using namespace std;
 #include<vector>
 #include<deque>
 #include<list>
+#include<forward_list>
 
 #define tab "\t"
 //#define STL_ARRAY
 //#define VECTOR
 //#define VECTOR_HW
 //#define STL_DEQUE
-#define STL_LIST
+//#define STL_LIST
+#define FORWARD_LIST
 
 void PrintVector(vector<int> vec);
 template<typename T> void print(const vector<T>& vec)
@@ -196,6 +198,25 @@ void main()
 	for (int i : cont_list) cout << i << tab; cout << endl;
 
 #endif // STL_LIST
+#ifdef FORWARD_LIST
+	std::forward_list<int>list = { 3,5,8,13,21 };
+	list.push_front(123);
+	/*std::forward_list<int>::iterator it = list.begin();
+	list.insert_after(list.end(), 1024);*/
+	for (std::forward_list<int>::iterator it = list.begin(); it != list.end(); it++)
+	{
+		cout << *it<<tab;
+	}
+	cout << endl;
+	list.reverse();
+	list.push_front(1024);
+	list.reverse();
+	for (int i : list)cout << i << tab; cout << endl;
+
+	std::list<int> list2;
+	cout << "ForwardList max size: \t" << list.max_size() << endl;
+	cout << "ForwardList max size: \t" << list2.max_size() << endl;
+#endif // FORWARD_LIST
 
 
 }
