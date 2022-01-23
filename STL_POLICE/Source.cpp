@@ -3,6 +3,9 @@
 #include<string>
 #include<list>
 #include<windows.h>
+#include<fstream>
+#include<iomanip>
+
 using std::cin;
 using std::cout;
 using std::endl;
@@ -53,8 +56,23 @@ public:
 		std::getline(is, place, '.');
 		return is;
 	}
+	std::ofstream& print(std::ofstream& os)const
+	{
+		return os << crimes.at(crime_id)<< " , " << place;
+		
+	}
+	 void write()const
+	{
+		std::ofstream fout("File.txt", std::ios_base::app);
+		fout << crimes.at(crime_id) << " , " << place<<endl;
+		fout.close();
+	}
 };
 std::ostream& operator<<(std::ostream& os, const Crime& obj)
+{
+	return obj.print(os);
+}
+std::ofstream& operator<<(std::ofstream& os, const Crime& obj)
 {
 	return obj.print(os);
 }
